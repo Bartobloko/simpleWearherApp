@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+* {
+    color: white;
+}
+
+button {
+    margin: 5px;
+    border: none;
+}
+
+::ng-deep .cdk-overlay-container {
+    z-index: 9999;
+ } 

@@ -1,26 +1,27 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class LocationService {
-  private locationSubject = new BehaviorSubject<Location | null>(null);
-  location$ = this.locationSubject.asObservable();
 
   constructor(
-    private http: HttpClient
+    private httpClient:HttpClient
   ) {}
 
-  setLocation(location: Location): void {
-    this.locationSubject.next(location);
-  }
+  getWeatherData(): any {
+    this.httpClient.get('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,weather_code,surface_pressure,cloud_cover,visibility,uv_index&timezone=auto&past_days=7&forecast_days=16&models=best_match')
+    .subscribe({
+      next(res) {
+        console.log(res)
+      },error () {
+        console.log("wywalam")
+      }
 
-  fetchWeather(location: Location): Observable<Weather> {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,surface_pressure,cloud_cover,visibility,uv_index&timezone=Europe%2FBerlin&past_days=7`;
-    return this.http.get<Weather>(url);
+    })
   }
 }
 

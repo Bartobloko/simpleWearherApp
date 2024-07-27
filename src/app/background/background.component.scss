@@ -1,7 +1,5 @@
 .background {
-    background: #500942;
-    background-image: linear-gradient(135deg,  #500942 0%, #3D2A69 100%);
-    background-repeat: no-repeat;
+    background: linear-gradient(135deg,  #500942 0%, #3D2A69 100%);
     height: 100vh;
     > .buttons {
         button {

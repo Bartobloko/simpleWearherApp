@@ -1,11 +1,12 @@
 import { Component, HostListener } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { LocationInterface, LocationService } from '../shared/services/location-service.service';
+import { LocationService } from '../shared/services/location-service.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-weather-card',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule,MatButtonModule],
   templateUrl: './weather-card.component.html',
   styleUrl: './weather-card.component.scss'
 })

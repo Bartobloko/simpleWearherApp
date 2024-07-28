@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {MatButtonModule, } from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { WeatherCardComponent } from "../weather-card/weather-card.component";
 import { LocationInterface, LocationService } from '../shared/services/location-service.service';

@@ -1,17 +1,38 @@
 <div class="weather-card-body">
-    <mat-card class="weather-card" (mousemove)="onMouseMove($event)">
-        <mat-card-header>
-        <mat-card-title>Grabowo City</mat-card-title>
-        <mat-card-subtitle>Polanf</mat-card-subtitle>
+    <mat-card class="weather-card d-flex align-items-center justify-content-center" (mousemove)="onMouseMove($event)">
+        <mat-card-header class="weather-card-header">
+            <div>
+                <mat-card-title>00:00</mat-card-title>
+                <mat-card-subtitle>24.01.2024</mat-card-subtitle>
+            </div>
         </mat-card-header>
         <mat-card-content>
-        <div class="weather-icon">
-            <img [src]="" alt="Weather icon">
-        </div>
-        <div class="weather-details">
-            <div class="temperature">°C</div>
-            <div class="description">jeba</div>
-        </div>
+            <div class="weather-icon d-flex align-items-center justify-content-center ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="currentColor" class="bi bi-cloud-rain" viewBox="0 0 16 16">
+                    <path d="M4.158 12.025a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317m3 0a.5.5 0 0 1 .316.633l-1 3a.5.5 0 0 1-.948-.316l1-3a.5.5 0 0 1 .632-.317m3 0a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317m3 0a.5.5 0 0 1 .316.633l-1 3a.5.5 0 1 1-.948-.316l1-3a.5.5 0 0 1 .632-.317m.247-6.998a5.001 5.001 0 0 0-9.499-1.004A3.5 3.5 0 1 0 3.5 11H13a3 3 0 0 0 .405-5.973M8.5 2a4 4 0 0 1 3.976 3.555.5.5 0 0 0 .5.445H13a2 2 0 0 1 0 4H3.5a2.5 2.5 0 1 1 .605-4.926.5.5 0 0 0 .596-.329A4 4 0 0 1 8.5 2"/>
+                </svg>
+            </div>
+            <div class="weather-details">
+                <div>
+                    <div>Temperatura:</div> 
+                    <div>0</div>
+                </div>
+                <div>
+                    <div>Wilgotność:</div>  
+                    <div>22.00</div>
+                </div>
+                <div>
+                    <div>Odzczuwalna Temperatura:</div>
+                    <div>0</div>
+                </div>
+                <div>
+                    <div>Możliwość Opadów:</div>
+                    <div>99</div>
+                </div>
+            </div>
+            <button mat-stroked-button>
+                Więcej...
+            </button>
         </mat-card-content>
     </mat-card>
 </div>

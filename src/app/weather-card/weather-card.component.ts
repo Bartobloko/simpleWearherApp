@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { LocationService } from '../shared/services/location-service.service';
+import { LocationInterface, LocationService } from '../shared/services/location-service.service';
 
 @Component({
   selector: 'app-weather-card',
@@ -16,11 +16,22 @@ export class WeatherCardComponent {
   ){}
 
   ngOnInit() {
-    this.locationService.getWeatherData()
+    this.getWeatherData()
   }
 
-
-
+  getWeatherData() {
+    this.locationService.location$.subscribe(location => {
+      if (location){
+        this.locationService.getWeatherData(location).subscribe({ 
+          next: (value) => {
+            console.log(value)
+          },
+          error: () => {
+          }
+        }) 
+      }
+    })
+  }
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {

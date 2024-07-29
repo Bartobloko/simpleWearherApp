@@ -2,14 +2,15 @@
     @if (location) {
         <div class="buttons">
             <a href="https://www.google.pl/maps/place/{{location.latitude}}N+{{location.longitude}}E" target="_blank">
-                <button mat-fab aria-label="Show on map button"  matTooltip="Show on map" >
+                <button mat-fab aria-label="Show on map button"  matTooltip="Pokaż na mapie" >
                     <mat-icon>track_changes</mat-icon>
                 </button>
             </a>
-            <button mat-fab aria-label="Enter location button" matTooltip="Enter location">
+            <button mat-fab aria-label="Enter location button" matTooltip="Wprowadz Lokalizacje">
                 <mat-icon>search</mat-icon>
             </button>
         </div>
         <app-weather-card ></app-weather-card>
     }
+    <app-localization-popup></app-localization-popup>
 </div>

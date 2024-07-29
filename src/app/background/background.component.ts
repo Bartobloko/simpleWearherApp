@@ -4,11 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { WeatherCardComponent } from "../weather-card/weather-card.component";
 import { LocationInterface, LocationService } from '../shared/services/location-service.service';
+import { LocalizationPopupComponent } from "../localization-popup/localization-popup.component";
 
 @Component({
   selector: 'app-background',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatTooltipModule, WeatherCardComponent],
+  imports: [MatButtonModule, MatIconModule, MatTooltipModule, WeatherCardComponent, LocalizationPopupComponent],
   templateUrl: './background.component.html',
   styleUrl: './background.component.scss'
 })

@@ -1,0 +1,36 @@
+.popupMode {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+    right:0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    >.popupWindow {
+        width: 30%;
+        height: 50%;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #6A66EB, #322F7D);
+        label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input {
+            color: white;
+            background: #5B5157;
+            border: none;
+            padding: 5px;
+            border-bottom: 1px solid;
+            border-radius: 5px 5px 0 0;
+            margin: 5px;
+        }
+        h3 {
+            margin: 5px;
+        }
+    }
+}

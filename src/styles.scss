@@ -3,9 +3,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-* {
-    color: white;
-}
+
 
 button {
     margin: 5px;
@@ -27,3 +25,7 @@ button {
  .justify-content-center {
     justify-content: center;
  }
+
+ .leaflet-popup-content-wrapper {
+   color: black !important;
+}

@@ -25,6 +25,10 @@
                 align-items: center;
             }
             >.headerIcon {
+                user-select: none; /* For most browsers */
+                -webkit-user-select: none; /* For Safari */
+                -moz-user-select: none; /* For Firefox */
+                -ms-user-select: none; /* For Internet Explorer and Edge */
                 font-size: xx-large;
                 &:hover {
                     cursor: pointer;
@@ -39,6 +43,14 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-gap: 5px;
+            >div {
+                padding: 5px;
+                border-radius: 10px;
+                background: rgba(0, 0, 0, 0.1);
+                >div {
+                    text-align: center;
+                }
+            }
         }
     }
 

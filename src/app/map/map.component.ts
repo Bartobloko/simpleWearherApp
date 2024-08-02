@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as L from 'leaflet'
 
 
+
 @Component({
   selector: 'app-map',
   standalone: true,
@@ -19,9 +20,7 @@ export class MapComponent {
   map: any;
   popup: any
 
-  
-
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     if (typeof window !== 'undefined') {
       import('leaflet').then(L => {
           this.initMap(L);     
@@ -48,7 +47,14 @@ export class MapComponent {
       zoom: 4
     });
 
-    this.popup = L.marker([0, 0]);
+    this.popup = L.marker([0, 0], {
+      icon: L.icon({
+        iconUrl: '/media/marker-icon.png',  // Ensure this path is correct
+        iconSize: [25, 41],                        // Adjust these values if needed
+        iconAnchor: [12, 41]                       // Adjust these values if needed
+        // No shadowUrl specified
+      })
+    });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
     

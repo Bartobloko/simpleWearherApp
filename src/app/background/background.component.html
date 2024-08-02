@@ -12,7 +12,7 @@
         </div>
         <app-weather-card ></app-weather-card>
     }
-    @if (!location || locationPopup) {
+    @if (locationPopup) {
         <app-localization-popup (closePopup)="closePopup()"></app-localization-popup>
 
     }

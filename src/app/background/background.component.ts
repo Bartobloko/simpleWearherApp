@@ -40,10 +40,12 @@ export class BackgroundComponent {
             });
           },
           (error) => {
+            this.locationPopup = true;
             console.error('Error occurred while getting location:', error);
           }
         );
       } else {
+        this.locationPopup = true;
         console.error('Geolocation is not supported by this browser.');
       }
     }

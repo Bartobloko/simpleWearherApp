@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as L from 'leaflet'
+
 
 @Component({
   selector: 'app-map',
@@ -10,39 +11,54 @@ import * as L from 'leaflet'
 })
 export class MapComponent {
 
+  constructor() { }
+
+  @Output() coordinatesSelected = new EventEmitter<{ lat: number, lng: number }>();
+  @Input() coordinates: { lat: number, lng: number } | null = null;
+
   map: any;
   popup: any
 
-  constructor() { }
+  
 
   ngOnInit(): void {
-     import('leaflet').then(L => {
-        this.initMap(L);
-      }).catch(err => {
-        console.error('Error loading Leaflet', err);
-      });
+    if (typeof window !== 'undefined') {
+      import('leaflet').then(L => {
+          this.initMap(L);     
+          if (this.map && this.coordinates) {
+            this.updateMapView(this.coordinates.lat, this.coordinates.lng);
+            this.popup.setLatLng([this.coordinates.lat, this.coordinates.lng]).addTo(this.map);
+          }
+        }).catch(err => {
+          console.error('Error loading Leaflet', err);
+        });
+    }
+  }
+
+  ngOnChanges(changes: any): void {
+    if (changes.coordinates && this.map && this.coordinates) {
+      this.updateMapView(this.coordinates.lat, this.coordinates.lng);
+      this.popup.setLatLng([this.coordinates.lat, this.coordinates.lng]).addTo(this.map);
+    }
   }
 
   private initMap(L: any): void {
     this.map = L.map('map', {
-      center: [51.505, -0.09],
-      zoom: 13
+      center: [51, 19],
+      zoom: 4
     });
 
-    this.popup = L.popup();
+    this.popup = L.marker([0, 0]);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
-
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
+    
     this.map.on('click', (e: any) => {
       const { lat, lng } = e.latlng;
-      console.log(`Latitude: ${lat}, Longitude: ${lng}`);
-      this.popup
-        .setLatLng(e.latlng)
-        .setContent(`Got It`)
-        .openOn(this.map);
+      this.coordinatesSelected.emit({ lat, lng }); 
     });
   }
 
+  private updateMapView(lat: number, lng: number): void {
+    this.map.setView([lat, lng], 10); 
+  }
 }

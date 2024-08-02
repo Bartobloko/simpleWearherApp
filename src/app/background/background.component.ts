@@ -20,6 +20,7 @@ export class BackgroundComponent {
   ){}
 
   location: LocationInterface | null = null;
+  locationPopup:boolean = false
 
   ngOnInit() {
     this.detectLocation()
@@ -29,21 +30,27 @@ export class BackgroundComponent {
   }
 
   detectLocation(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.locationService.setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          });
-        },
-        (error) => {
-          console.error('Error occurred while getting location:', error);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
+    if (typeof navigator !== 'undefined') { 
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.locationService.setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            });
+          },
+          (error) => {
+            console.error('Error occurred while getting location:', error);
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by this browser.');
+      }
     }
+  }
+
+  closePopup() {
+    this.locationPopup = false;
   }
 
 }

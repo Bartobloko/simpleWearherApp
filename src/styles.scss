@@ -12,20 +12,23 @@ button {
 
 ::ng-deep .cdk-overlay-container {
     z-index: 10;
- } 
+} 
 
- .d-flex {
-    display: flex;
- }
-
- .align-items-center {
-    align-items: center;
- }
-
- .justify-content-center {
-    justify-content: center;
- }
-
- .leaflet-popup-content-wrapper {
-   color: black !important;
+.d-flex {
+   display: flex;
 }
+
+.align-items-center {
+   align-items: center;
+}
+
+.justify-content-center {
+   justify-content: center;
+}
+
+.leaflet-popup-close-button{
+   display: none;
+}
+
+
+

@@ -15,6 +15,8 @@ export class WeatherCardComponent {
   constructor(
     private locationService:LocationService,
   ){}
+  
+  private isAnimating = false;
 
   ngOnInit() {
     this.getWeatherData()
@@ -36,6 +38,16 @@ export class WeatherCardComponent {
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      requestAnimationFrame(() => {
+        this.updateCardStyles(event);
+        this.isAnimating = false;
+      });
+    }
+  }
+
+  private updateCardStyles(event: MouseEvent) {
     const card = document.querySelector('.weather-card') as HTMLElement;
     const { clientX: mouseX, clientY: mouseY } = event;
     const { innerWidth: width, innerHeight: height } = window;
@@ -45,9 +57,8 @@ export class WeatherCardComponent {
 
     card.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
 
-
     const shadowX = (width / 2 - mouseX) / width * 50;
-    const shadowY = (mouseY - height / 2) / height * 50; 
+    const shadowY = (mouseY - height / 2) / height * 50;
 
     card.style.boxShadow = `${shadowX}px ${-shadowY}px 20px rgba(0, 0, 0, 0.2)`;
   }

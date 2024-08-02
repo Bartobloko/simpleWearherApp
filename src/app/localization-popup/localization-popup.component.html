@@ -1,19 +1,22 @@
 <div class="popupMode">
     <div class="popupWindow">
         <div class="popupHeader d-flex justify-content-center">
-            <h1>Podaj lokalizację</h1>
+            <h1 class="d-flex justify-content-center">Podaj lokalizację</h1>
+            @if (coordinates){
+                <button mat-mini-fab (click)="closePopup.emit()">&#10005;</button>
+            }
         </div>
-        <div></div>
-        <form>
+        <form [formGroup]="localizationForm" class="d-flex">
             <label>
                 <h3>Szerokość geograficzna:</h3>
-                <input type="number">
+                <input type="number" formControlName="latitude">
             </label>
-            <label>
+            <label> 
                 <h3>Długość geograficzna:</h3>
-                <input type="number">
+                <input type="number" formControlName="longitude">
             </label>
         </form>
-        <app-map></app-map>
+        <app-map class="map" [coordinates]="coordinates" (coordinatesSelected)="onCoordinatesSelected($event)"></app-map>
+        <div class="d-flex justify-content-center"><button mat-stroked-button (click)="saveForm()">Zapisz</button></div>
     </div>
 </div>

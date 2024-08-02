@@ -6,11 +6,14 @@
                     <mat-icon>track_changes</mat-icon>
                 </button>
             </a>
-            <button mat-fab aria-label="Enter location button" matTooltip="Wprowadz Lokalizacje">
+            <button mat-fab aria-label="Enter location button" matTooltip="Wprowadz Lokalizacje" (click)="locationPopup = true">
                 <mat-icon>search</mat-icon>
             </button>
         </div>
         <app-weather-card ></app-weather-card>
     }
-    <app-localization-popup></app-localization-popup>
+    @if (!location || locationPopup) {
+        <app-localization-popup (closePopup)="closePopup()"></app-localization-popup>
+
+    }
 </div>

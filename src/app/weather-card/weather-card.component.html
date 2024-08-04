@@ -1,14 +1,14 @@
 <div class="weather-card-body">
     <mat-card class="weather-card d-flex align-items-center justify-content-center" (mousemove)="onMouseMove($event)">
         <mat-card-header class="weather-card-header">
-            <div class="headerIcon">
+            <div class="headerIcon" (click)=" indexofHoulyData = indexofHoulyData -1">
                 &#8678;
             </div>
             <div>
-                <mat-card-title>00:00</mat-card-title>
-                <mat-card-subtitle>24.01.2024</mat-card-subtitle>
+                <mat-card-title>{{hourlyData[indexofHoulyData].formattedHour}}<sub>UTC {{ hourlyData[indexofHoulyData].utcDifferenceInHours >= 0 ? '+' : '' }}{{ hourlyData[indexofHoulyData].utcDifferenceInHours }}</sub></mat-card-title>
+                <mat-card-subtitle>{{hourlyData[indexofHoulyData].date}}</mat-card-subtitle>
             </div>
-            <div class="headerIcon">
+            <div class="headerIcon" (click)="indexofHoulyData = indexofHoulyData + 1">
                 &#8680;
             </div>
         </mat-card-header>

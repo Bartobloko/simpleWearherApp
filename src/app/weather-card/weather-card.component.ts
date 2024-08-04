@@ -33,25 +33,8 @@ export class WeatherCardComponent {
         this.locationService.getWeatherData(location).subscribe({ 
           next: (res: any) => {
 
-            const { time, temperature_2m, apparent_temperature, cloud_cover, precipitation_probability, relative_humidity_2m, surface_pressure, uv_index, visibility, weather_code } = res.hourly;
-    
-            this.hourlyData = time.map((timestamp: string, index: number) => ({
-                time: timestamp,
-                hour: timestamp,
-                date: timestamp,
-                temperature: temperature_2m[index],
-                apparent_temperature: apparent_temperature[index],
-                cloud_cover: cloud_cover[index],
-                precipitation_probability: precipitation_probability[index],
-                relative_humidity_2m: relative_humidity_2m[index],
-                surface_pressure: surface_pressure[index],
-                uv_index: uv_index[index],
-                visibility: visibility[index],
-                weather_code: weather_code[index]
-            }));
+            this.getHourlyData(res)
             this.findCurrentTimeIndex(res)
-            console.log(res,'res')
-            console.log(this.hourlyData[this.indexofHoulyData],'hourlyData');
             
           },
           error: () => {
@@ -61,25 +44,67 @@ export class WeatherCardComponent {
     })
   }
 
-  findCurrentTimeIndex(response:any) {
+  getHourlyData(res: any) {
+    const { time, temperature_2m, apparent_temperature, cloud_cover, precipitation_probability, relative_humidity_2m, surface_pressure, uv_index, visibility, weather_code } = res.hourly;
+  
+    this.hourlyData = time.map((timestamp: string, index: number) => {
+     
+      const date = new Date(timestamp);
+  
+      const year = date.getUTCFullYear();
+      const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+      const day = date.getUTCDate().toString().padStart(2, '0'); 
+      const hours = date.getUTCHours().toString().padStart(2, '0'); 
+      const minutes = date.getUTCMinutes().toString().padStart(2, '0'); 
 
+      const formattedDate = `${day}-${month}-${year}`;
+
+      const formattedHour = `${hours}:${minutes}`;
+
+      return {
+        date: formattedDate, 
+        formattedHour, 
+        temperature: temperature_2m[index],
+        apparent_temperature: apparent_temperature[index],
+        cloud_cover: cloud_cover[index],
+        precipitation_probability: precipitation_probability[index],
+        relative_humidity_2m: relative_humidity_2m[index],
+        surface_pressure: surface_pressure[index],
+        uv_index: uv_index[index],
+        visibility: visibility[index],
+        weather_code: weather_code[index]
+      };
+    });
+  
+  }
+  
+
+  findCurrentTimeIndex(response:any) {
+    console.log(response)
     const { time } = response.hourly;
     const offsetSeconds = response.utc_offset_seconds;
     const offsetMilliseconds = offsetSeconds * 1000;
+
+    console.log(response.hourly)
     
-    const currentUtcDate = new Date();
-    
+    const localDate = new Date();
+    const currentUtcDate = this.convertDateToUTC(localDate)
+
     const targetTimezoneDate = new Date(currentUtcDate.getTime() + offsetMilliseconds);
-    
+
     const targetTimezoneDateRounded = new Date(Math.round(targetTimezoneDate.getTime() / 3600000) * 3600000);
+    console.log(targetTimezoneDateRounded)
     
-    const roundedTimeISO = targetTimezoneDateRounded.toISOString().slice(0, 13) + ":00";
-    
-    console.log("Current UTC Date:", currentUtcDate.toISOString());
-    console.log("Target Timezone Date:", targetTimezoneDate.toISOString());
-    console.log("Rounded Time:", roundedTimeISO);
+    const roundedTimeISO = `${targetTimezoneDateRounded.getFullYear()}-${String(targetTimezoneDateRounded.getMonth() + 1).padStart(2, '0')}-${String(targetTimezoneDateRounded.getDate()).padStart(2, '0')}T${String(targetTimezoneDateRounded.getHours()).padStart(2, '0')}:00`;
+    console.log(roundedTimeISO)
 
     this.indexofHoulyData =  time.findIndex((t: string) => t === roundedTimeISO);
+    console.log(this.indexofHoulyData)
+  }
+
+  convertDateToUTC(date: any) 
+  {
+     return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
   }
 
   @HostListener('document:mousemove', ['$event'])

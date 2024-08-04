@@ -3,7 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LocationService } from '../shared/services/location-service.service';
 import { MatButtonModule } from '@angular/material/button';
-import { log } from 'console';
 
 @Component({
   selector: 'app-weather-card',
@@ -61,9 +60,12 @@ export class WeatherCardComponent {
 
       const formattedHour = `${hours}:${minutes}`;
 
+      const utcDifferenceInHours = (res.utc_offset_seconds / 60) /60
+
       return {
         date: formattedDate, 
         formattedHour, 
+        utcDifferenceInHours,
         temperature: temperature_2m[index],
         apparent_temperature: apparent_temperature[index],
         cloud_cover: cloud_cover[index],
@@ -80,26 +82,19 @@ export class WeatherCardComponent {
   
 
   findCurrentTimeIndex(response:any) {
-    console.log(response)
     const { time } = response.hourly;
     const offsetSeconds = response.utc_offset_seconds;
     const offsetMilliseconds = offsetSeconds * 1000;
-
-    console.log(response.hourly)
     
-    const localDate = new Date();
-    const currentUtcDate = this.convertDateToUTC(localDate)
+    const currentUtcDate = this.convertDateToUTC(new Date())
 
     const targetTimezoneDate = new Date(currentUtcDate.getTime() + offsetMilliseconds);
 
     const targetTimezoneDateRounded = new Date(Math.round(targetTimezoneDate.getTime() / 3600000) * 3600000);
-    console.log(targetTimezoneDateRounded)
     
     const roundedTimeISO = `${targetTimezoneDateRounded.getFullYear()}-${String(targetTimezoneDateRounded.getMonth() + 1).padStart(2, '0')}-${String(targetTimezoneDateRounded.getDate()).padStart(2, '0')}T${String(targetTimezoneDateRounded.getHours()).padStart(2, '0')}:00`;
-    console.log(roundedTimeISO)
 
     this.indexofHoulyData =  time.findIndex((t: string) => t === roundedTimeISO);
-    console.log(this.indexofHoulyData)
   }
 
   convertDateToUTC(date: any) 

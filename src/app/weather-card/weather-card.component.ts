@@ -3,6 +3,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LocationService } from '../shared/services/location-service.service';
 import { MatButtonModule } from '@angular/material/button';
+import { Units } from '../shared/interfaces/units'
+import { HourlyWeatherDataConverted, HourlyWeatherData } from '../shared/interfaces/hourly-weather-data'
+import { WholeWeatherData } from '../shared/interfaces/whole-weather-data'
 
 @Component({
   selector: 'app-weather-card',
@@ -17,10 +20,10 @@ export class WeatherCardComponent {
     private locationService:LocationService,
   ){}
   
-  private isAnimating = false;
+  isAnimating: boolean = false;
+  units!: Units
   indexofHoulyData:number = 0;
-  browserDate = new Date().toUTCString();
-  hourlyData: any
+  hourlyData!: HourlyWeatherDataConverted[]
 
   ngOnInit() {
     this.getWeatherData()
@@ -28,33 +31,35 @@ export class WeatherCardComponent {
 
   getWeatherData() {
     this.locationService.location$.subscribe(location => {
-      if (location){
-        this.locationService.getWeatherData(location).subscribe({ 
-          next: (res: any) => {
-
-            this.getHourlyData(res)
-            this.findCurrentTimeIndex(res)
-            
+      if (location) {
+        this.locationService.getWeatherData(location).subscribe({
+          next: (res: WholeWeatherData) => {
+            this.units = res.hourly_units;
+            this.getHourlyData(res);
+            this.findCurrentTimeIndex(res);
+            console.log(this.hourlyData)
           },
-          error: () => {
+          error: (err) => {
+            //#TODO  add toaster
           }
-        }) 
+        });
       }
-    })
+    });
   }
 
-  getHourlyData(res: any) {
+  getHourlyData(res: WholeWeatherData) {
+    
     const { time, temperature_2m, apparent_temperature, cloud_cover, precipitation_probability, relative_humidity_2m, surface_pressure, uv_index, visibility, weather_code } = res.hourly;
   
     this.hourlyData = time.map((timestamp: string, index: number) => {
      
       const date = new Date(timestamp);
   
-      const year = date.getUTCFullYear();
-      const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-      const day = date.getUTCDate().toString().padStart(2, '0'); 
-      const hours = date.getUTCHours().toString().padStart(2, '0'); 
-      const minutes = date.getUTCMinutes().toString().padStart(2, '0'); 
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0'); 
+      const hours = date.getHours().toString().padStart(2, '0'); 
+      const minutes = date.getMinutes().toString().padStart(2, '0'); 
 
       const formattedDate = `${day}-${month}-${year}`;
 
@@ -81,9 +86,10 @@ export class WeatherCardComponent {
   }
   
 
-  findCurrentTimeIndex(response:any) {
-    const { time } = response.hourly;
-    const offsetSeconds = response.utc_offset_seconds;
+  findCurrentTimeIndex(res:WholeWeatherData) {
+    
+    const { time } = res.hourly;
+    const offsetSeconds = res.utc_offset_seconds;
     const offsetMilliseconds = offsetSeconds * 1000;
     
     const currentUtcDate = this.convertDateToUTC(new Date())
@@ -97,8 +103,7 @@ export class WeatherCardComponent {
     this.indexofHoulyData =  time.findIndex((t: string) => t === roundedTimeISO);
   }
 
-  convertDateToUTC(date: any) 
-  {
+  convertDateToUTC(date: Date) {
      return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
   }
 

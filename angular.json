@@ -20,7 +20,7 @@
             "allowedCommonJsDependencies": [
                 "leaflet"
             ],
-            "outputPath": "dist/simple-wearher-app",
+            "outputPath": "dist/simpleWearherApp",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [

@@ -3,6 +3,24 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.popupMode {
+   height: 100%;
+   width: 100%;
+   position: fixed;
+   z-index: 99;
+   right: 0;
+   top: 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   backdrop-filter: blur(10px);
+   background-color: rgba(0, 0, 0, 0.3);
+   >.popupWindow {
+      border-radius: 20px;
+      background: linear-gradient(225deg, #be1580da, #322f7dde);
+      padding: 10px 20px;
+   }
+}
 
 
 button {
@@ -35,7 +53,30 @@ button {
    opacity: 0.5;
  }
 
- .colorWhite {
+ .text-white {
    color:white
  }
 
+.w-50 {
+   width: 50% !important;
+}
+
+.border-0 {
+   border: none;
+}
+
+.d-block {
+   display: block;
+}
+
+.position-fixed {
+   position: fixed;
+}
+
+.top-0 {
+   top: 0;
+}
+
+.end-0 {
+   right: 0;
+}

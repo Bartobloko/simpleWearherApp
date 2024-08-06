@@ -1,1 +1,46 @@
-<p>detailed-weather-info works!</p>
+<div class="popupMode">
+    <div class="popupWindow">
+        <div class="popupHeader">
+            <div class="d-flex justify-content-center">
+                <div class="w-50"><img src="../../assets/weatherIcons/{{popupData.icon}}" alt="Brightness High Icon" width="50%" height="50%"></div>
+                <div>{{popupData.formattedHour}}</div>
+            </div>
+            <div>
+                <div>Szerokość: {{location?.latitude}}</div>
+                <div>Temperatura: {{popupData.temperature}}{{units.temperature_2m}}</div>
+            </div>
+            <div>
+                <div>Wysokość: {{location?.longitude}}</div>
+                <div>Odczuwalna: {{popupData.apparent_temperature}}{{units.apparent_temperature}}</div>
+            </div>
+            <button mat-mini-fab (click)="closePopup.emit()">&#10005;</button>
+        </div>
+        <div class="popupContent">
+            <div>
+                <div>Ciśnienie: </div>
+                <div>{{popupData.surface_pressure}}{{units.surface_pressure}}</div>
+            </div>
+            <div>
+                <div>Indeks UV:</div>
+                <div>{{popupData.uv_index}}{{units.uv_index}}</div>
+            </div>
+            
+            <div>
+                <div>Wilgoć:</div> 
+                <div>{{popupData.relative_humidity_2m}}{{units.relative_humidity_2m}}</div>
+            </div>
+            <div>
+                <div>Szansa opadów:</div> 
+                <div>{{popupData.precipitation_probability}}{{units.precipitation_probability}}</div>
+            </div>
+            <div>
+                <div>Zachmurzenie:</div> 
+                <div>{{popupData.cloud_cover}}{{units.cloud_cover}}</div>
+            </div>
+            <div>
+                <div>Widoczność:</div> 
+                <div>{{popupData.visibility}}{{units.visibility}}</div>
+            </div>
+        </div>
+    </div>
+</div>

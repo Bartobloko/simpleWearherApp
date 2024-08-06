@@ -50,9 +50,4 @@ export class BackgroundComponent {
       }
     }
   }
-
-  closePopup() {
-    this.locationPopup = false;
-  }
-
 }

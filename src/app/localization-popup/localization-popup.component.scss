@@ -1,22 +1,8 @@
 .popupMode {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    z-index: 99;
-    right: 0;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.3);
 
-    .popupWindow {
+    >.popupWindow {
         width: 30%;
         height: 50%;
-        padding: 10px 20px;
-        border-radius: 20px;
-        background: linear-gradient(225deg, #be1580da, #322f7dde);
 
         .popupHeader {
             color: white;

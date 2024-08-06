@@ -1,0 +1,19 @@
+<div class="toast-container position-fixed top-0 end-0">
+    <div 
+    class="toast align-items-center text-white border-0 d-block show" 
+    role="alert" aria-live="assertive" aria-atomic="true"
+    [ngClass]="{'bg-success': toast.type === 'success', 'bg-danger': toast.type === 'error', 'bg-primary': toast.type === 'info'}"
+    *ngFor="let toast of toasts; let i = index"
+    >
+        <div class="d-flex">
+            <div class="toast-body d-flex">
+                <img *ngIf="toast.type === 'error'" src="../../assets/toastIcons/error.png" alt="Error">
+                <img *ngIf="toast.type === 'success'" src="../../assets/toastIcons/correct.png" alt="Success">
+                {{ toast.message }}
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" aria-label="Close" (click)="removeToast(toast)"></button>
+        </div>
+    </div>
+  
+  </div>
+

@@ -1,32 +1,37 @@
 import { Component, HostListener } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { LocationService } from '../shared/services/location-service.service';
+import { LocationInterface, LocationService } from '../shared/services/location-service.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Units } from '../shared/interfaces/units'
 import { HourlyWeatherDataConverted, HourlyWeatherData } from '../shared/interfaces/hourly-weather-data'
 import { WholeWeatherData } from '../shared/interfaces/whole-weather-data'
 import { CommonModule } from '@angular/common';
 import { WeatherCardDataService } from './weather-card-data.service'
+import { DetailedWeatherInfoComponent } from "../detailed-weather-info/detailed-weather-info.component";
+import { ToastDataService } from '../shared/services/toast-data.service';
 
 @Component({
   selector: 'app-weather-card',
   standalone: true,
-  imports: [MatCardModule,MatButtonModule,MatTooltipModule,CommonModule],
+  imports: [MatCardModule, MatButtonModule, MatTooltipModule, CommonModule, DetailedWeatherInfoComponent],
   templateUrl: './weather-card.component.html',
   styleUrl: './weather-card.component.scss'
 })
 export class WeatherCardComponent {
 
   constructor(
-    private locationService:LocationService,
+    private locationService: LocationService,
+    private toastDataService: ToastDataService
   ){}
   
   isAnimating: boolean = false;
   units!: Units
   indexofHoulyData:number = 0;
   hourlyData!: HourlyWeatherDataConverted[]
+  detailedInfoPopup:boolean = false;
   icon:string = 'brightness-high.svg'
+  apiLocation!: LocationInterface | null
 
   ngOnInit() {
     this.getWeatherData()
@@ -37,13 +42,13 @@ export class WeatherCardComponent {
       if (location) {
         this.locationService.getWeatherData(location).subscribe({
           next: (res: WholeWeatherData) => {
-            console.log(res)
             this.units = res.hourly_units;
             this.hourlyData = WeatherCardDataService.getHourlyData(res)
             this.indexofHoulyData = WeatherCardDataService.findCurrentTimeIndex(res)
+            this.apiLocation = {latitude:res.latitude,longitude:res.longitude}
           },
-          error: (err) => {
-            //#TODO  add toaster
+          error: () => {
+            this.toastDataService.addToast('Błąd podczas pobierania danych lokalizacji', 'error');
           }
         });
       }

@@ -1,0 +1,24 @@
+.bg-success {
+    background: green;
+}
+.bg-danger {
+    background: red;
+}
+.bg-primary {
+    background: rgb(0, 183, 255);
+}
+
+.toast-container {
+    padding: 10px;
+    >div {
+        background: rgb(8, 152, 209);
+    }
+    .toast-body {
+        img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+    }
+
+}

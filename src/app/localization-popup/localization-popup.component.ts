@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { MapComponent } from "../map/map.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,8 +24,8 @@ export class LocalizationPopupComponent {
   @Output() closePopup  = new EventEmitter();
 
   localizationForm = new FormGroup({
-    latitude: new FormControl(0,[Validators.required]),
-    longitude: new FormControl(0,[Validators.required]),
+    latitude: new FormControl(0,[Validators.required,Validators.min(-180),Validators.max(180)]),
+    longitude: new FormControl(0,[Validators.required,Validators.min(-180),Validators.max(180)]),
   })
 
   coordinates: { lat: number, lng: number } | null = null;
@@ -76,4 +76,24 @@ export class LocalizationPopupComponent {
     }
   }
 
+  
+  @HostListener('input', ['$event.target'])
+  onInputChange(target: HTMLInputElement) {
+    const value = Number(target.value);
+    if (target.name === 'latitude') {
+      if (value > 180) {
+        this.localizationForm.get('latitude')?.setValue(180, { emitEvent: false });
+      } else if (value < -180) {
+        this.localizationForm.get('latitude')?.setValue(-180, { emitEvent: false });
+      }
+    } else if (target.name === 'longitude') {
+      if (value > 180) {
+        this.localizationForm.get('longitude')?.setValue(180, { emitEvent: false });
+      } else if (value < -180) {
+        this.localizationForm.get('longitude')?.setValue(-180, { emitEvent: false });
+      }
+    }
+  }
+  
 }
+

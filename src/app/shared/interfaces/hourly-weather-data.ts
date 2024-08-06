@@ -25,4 +25,5 @@ export interface HourlyWeatherDataConverted {
     uv_index: number;                 
     visibility: number;              
     weather_code: number;
+    icon:string
 }

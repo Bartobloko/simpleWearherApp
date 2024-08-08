@@ -7,8 +7,8 @@
     >
         <div class="d-flex">
             <div class="toast-body d-flex">
-                <img *ngIf="toast.type === 'error'" src="/assets/toastIcons/error.png" alt="Error">
-                <img *ngIf="toast.type === 'success'" src="/assets/toastIcons/correct.png" alt="Success">
+                <img *ngIf="toast.type === 'error'" src="assets/toastIcons/error.png" alt="Error">
+                <img *ngIf="toast.type === 'success'" src="assets/toastIcons/correct.png" alt="Success">
                 {{ toast.message }}
             </div>
             <button type="button" class="btn-close me-2 m-auto" aria-label="Close" (click)="removeToast(toast)"></button>

@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import * as L from 'leaflet'
-
-
+import { MapService } from '../shared/services/map.service';
 
 @Component({
   selector: 'app-map',
@@ -12,25 +10,29 @@ import * as L from 'leaflet'
 })
 export class MapComponent {
 
-  constructor() { }
+  constructor(
+    private mapService: MapService,
+  ) { }
 
   @Output() coordinatesSelected = new EventEmitter<{ lat: number, lng: number }>();
   @Input() coordinates: { lat: number, lng: number } | null = null;
 
   map: any;
-  popup: any
+  popup: any;
 
-  ngAfterViewInit(): void {
-    if (typeof window !== 'undefined') {
-      import('leaflet').then(L => {
-          this.initMap(L);     
-          if (this.map && this.coordinates) {
-            this.updateMapView(this.coordinates.lat, this.coordinates.lng);
-            this.popup.setLatLng([this.coordinates.lat, this.coordinates.lng]).addTo(this.map);
-          }
-        }).catch(err => {
-          console.error('Error loading Leaflet', err);
-        });
+  async ngAfterViewInit(): Promise<void> {
+    if (globalThis.window !== undefined) {
+      await this.mapService.loadLeaflet();  // Ensure Leaflet is loaded
+
+      if (this.mapService.L) {
+        this.initMap();
+        if (this.map && this.coordinates) {
+          this.updateMapView(this.coordinates.lat, this.coordinates.lng);
+          this.popup.setLatLng([this.coordinates.lat, this.coordinates.lng]).addTo(this.map);
+        }
+      } else {
+        console.error('Leaflet library failed to load');
+      }
     }
   }
 
@@ -41,30 +43,33 @@ export class MapComponent {
     }
   }
 
-  private initMap(L: any): void {
-    this.map = L.map('map', {
+  private initMap(): void {
+    //@ts-ignore
+    this.map = this.mapService.L.map('map', {
       center: [51, 19],
       zoom: 4
     });
 
-    this.popup = L.marker([0, 0], {
-      icon: L.icon({
-        iconUrl: '/media/marker-icon.png',  // Ensure this path is correct
-        iconSize: [25, 41],                        // Adjust these values if needed
-        iconAnchor: [12, 41]                       // Adjust these values if needed
-        // No shadowUrl specified
+    //@ts-ignore
+    this.popup = this.mapService.L.marker([0, 0], {
+      //@ts-ignore
+      icon: this.mapService.L.icon({
+        iconUrl: '/media/marker-icon.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41]
       })
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
-    
+    //@ts-ignore
+    this.mapService.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
+
     this.map.on('click', (e: any) => {
       const { lat, lng } = e.latlng;
-      this.coordinatesSelected.emit({ lat, lng }); 
+      this.coordinatesSelected.emit({ lat, lng });
     });
   }
 
   private updateMapView(lat: number, lng: number): void {
-    this.map.setView([lat, lng], 10); 
+    this.map.setView([lat, lng], 10);
   }
 }

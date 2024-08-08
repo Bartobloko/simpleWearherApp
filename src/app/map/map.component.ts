@@ -54,9 +54,9 @@ export class MapComponent {
     this.popup = this.mapService.L.marker([0, 0], {
       //@ts-ignore
       icon: this.mapService.L.icon({
-        iconUrl: '/media/marker-icon.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41]
+        iconUrl: 'assets/media/geoMarker.png',
+        iconSize: [16, 16],
+        iconAnchor: [8, 0]
       })
     });
 

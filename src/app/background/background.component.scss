@@ -1,6 +1,8 @@
 .background {
     background: linear-gradient(135deg,  #500942 0%, #3D2A69 100%);
-    height: 100vh;
+    height: 100%;
+    max-width: 100%;
+    overflow: auto;
     > .buttons { 
         height: 8%;
         button {

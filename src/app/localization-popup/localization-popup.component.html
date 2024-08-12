@@ -9,11 +9,11 @@
         <form [formGroup]="localizationForm" class="d-flex">
             <label for="latitude">
                 <h3>Szerokość geograficzna:</h3>
-                <input type="number" formControlName="latitude" name="latitude" [max]="180" [min]="-180">
+                <input type="number" formControlName="latitude" name="latitude" id="latitude" [max]="180" [min]="-180">
             </label>
             <label for="longitude"> 
                 <h3>Długość geograficzna:</h3>
-                <input type="number" formControlName="longitude" name="longitude" [max]="180" [min]="-180">
+                <input type="number" formControlName="longitude" name="longitude" id="longitude" [max]="180" [min]="-180">
             </label>
         </form>
         <app-map class="map" [coordinates]="coordinates" (coordinatesSelected)="onCoordinatesSelected($event)"></app-map>

@@ -10,7 +10,7 @@
                 <div>Temperatura: {{popupData.temperature}}{{units.temperature_2m}}</div>
             </div>
             <div>
-                <div>Wysokość: {{location?.longitude}}</div>
+                <div>Wysokość: {{location?.longitude?.toFixed(4)}}</div>
                 <div>Odczuwalna: {{popupData.apparent_temperature}}{{units.apparent_temperature}}</div>
             </div>
             <button mat-mini-fab (click)="closePopup.emit()">&#10005;</button>

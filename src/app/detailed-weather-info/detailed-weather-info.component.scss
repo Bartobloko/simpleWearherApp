@@ -1,9 +1,9 @@
 .popupWindow {
-    height: 40%;
-    width: 40%;
+    min-height: 40%;
+    min-width: 40%;
     >.popupHeader {
         position: relative;
-        height: 20%;
+        min-height: 20%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         margin: 10px;
@@ -14,6 +14,10 @@
             align-items: center;
             >div {
                 font-size: medium;
+                @media (width<600px) {
+                    text-align: center;
+
+                }
             }
         }
         img {
@@ -23,7 +27,7 @@
             position: absolute;
             right: -2%;
             top:-6%;
-            height: 55%;
+            min-height: 55%;
             aspect-ratio: 1/1;
             margin: 0;
             color: white;
@@ -33,23 +37,23 @@
 
     }
     >.popupContent {
-        height: 70%;
+        min-height: 70%;
         margin:10px;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr;
-        grid-gap: 20px;
         >div {
             display: grid;
+            margin: 4%;
+            padding: 10%;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.1);
+
             >div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
-
-            padding: 10%;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.1);
             
         }
     }

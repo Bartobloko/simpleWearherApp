@@ -37,7 +37,7 @@ A straightforward weather application providing current weather information for 
    ```bash
    npm install
    
-4. **Run the Application:**
+## Run the Application
 
    ```bash
    ng serve

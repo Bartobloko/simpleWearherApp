@@ -1,6 +1,6 @@
 # Simple Weather App
 
-A straightforward weather application providing current weather information for specified locations.
+A straightforward weather application providing weather information for specified locations.
 
 ## Features
 

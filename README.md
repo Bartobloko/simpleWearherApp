@@ -10,7 +10,7 @@ A straightforward weather application providing current weather information for 
 
 ## Technologies Used
 
-- **Frontend:** HTML, SCSS, Angular Material
+- **Frontend:** HTML, SCSS, Angular Material, Open meteo API, Leaflet map
 - **Framework:** Angular
 
 ## Getting Started

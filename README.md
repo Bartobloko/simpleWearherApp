@@ -10,8 +10,7 @@ A straightforward weather application providing current weather information for 
 
 ## Technologies Used
 
-- **Frontend:** HTML, SCSS
-- **Backend:** TypeScript
+- **Frontend:** HTML, SCSS, Angular Material
 - **Framework:** Angular
 
 ## Getting Started
@@ -27,3 +26,18 @@ A straightforward weather application providing current weather information for 
 
    ```bash
    git clone https://github.com/Bartobloko/simpleWearherApp.git
+
+2. **Navigate to the project directory:**
+
+   ```bash
+   cd simpleWearherApp
+   
+3. **Install dependencies:**
+
+   ```bash
+   npm install
+   
+4. **Run the Application:**
+
+   ```bash
+   ng serve
